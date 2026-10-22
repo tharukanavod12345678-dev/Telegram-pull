@@ -1,0 +1,33 @@
+[Unit]
+Description=Telegram Video Puller (Main)
+After=network-online.target
+Wants=network-online.target
+
+StartLimitIntervalSec=60
+StartLimitBurst=3
+OnFailure=tgagent.service
+
+[Service]
+Type=simple
+User=USERNAME
+Group=USERNAME
+EnvironmentFile=-/home/USERNAME/tg-pull/.env
+WorkingDirectory=/home/USERNAME/tg-pull
+ExecStart=/home/USERNAME/tg-pull/venv/bin/python -u /home/USERNAME/tg-pull/app.py
+
+Restart=on-failure
+RestartSec=10
+
+Nice=19
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+CPUWeight=10
+IOWeight=10
+MemoryHigh=250M
+MemoryMax=350M
+OOMScoreAdjust=500
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
