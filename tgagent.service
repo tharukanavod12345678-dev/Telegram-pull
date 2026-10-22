@@ -1,0 +1,19 @@
+[Unit]
+Description=Failsafe Agent for Telegram Puller
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=USERNAME
+Group=USERNAME
+EnvironmentFile=-/home/USERNAME/tg-pull/.env
+WorkingDirectory=/home/USERNAME/tg-pull
+ExecStart=/home/USERNAME/tg-pull/venv/bin/python -u /home/USERNAME/tg-pull/agent.py
+
+Restart=no
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
